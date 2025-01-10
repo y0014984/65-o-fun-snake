@@ -9,4 +9,4 @@ debugcode.txt
 ByteDump.txt
 
 *.afdesign~lock~
-*.afdesign~lock~:com:dropbox.ignored
+*.afdesign~lock~:com.dropbox.ignored
