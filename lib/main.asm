@@ -18,13 +18,30 @@
 
 // ========================================
 
-direction: .byte $00
-prevDirection: .byte $00
-lastPosX: .byte $00
-lastPosY: .byte $00
+// Game Variables
+
+headDir: .byte $00
+headPosX: .byte $00
+headPosY: .byte $00
+
+prevHeadDir: .byte $00
+prevHeadPosX: .byte $00
+prevHeadPosY: .byte $00
+
+tailDir: .byte $00
+tailPosX: .byte $00
+tailPosY: .byte $00
+
+prevTailDir: .byte $00
+prevTailPosX: .byte $00
+prevTailPosY: .byte $00
+
 prevFrameCounter: .byte $00
+
 speed: .byte $10
 speedCounter: .byte $00
+
+// ========================================
 
 main:
     lda #$00
@@ -34,14 +51,26 @@ main:
 
     jsr importTiles
 
-    lda #$40
-    sta screenMemStart
-
-    lda #round(screenWidth/2)
+    lda #round(screenWidth/2)-3
     sta curPosX
     lda #round(screenHeight/2)
     sta curPosY
 
+    lda #tileTailLeft
+    jsr printChar
+    inc curPosX
+    lda #tileRightLeft
+    jsr printChar
+    inc curPosX
+    lda #tileRightLeft
+    jsr printChar
+    inc curPosX
+    lda #tileRightLeft
+    jsr printChar
+    inc curPosX
+    lda #tileRightLeft
+    jsr printChar
+    inc curPosX
     lda #tileHeadRight
     jsr printChar
 
@@ -74,7 +103,7 @@ main:
     jmp !setDirection+
 
 !setDirection:
-    sta direction
+    sta headDir
 
 !checkMove:
     lda speedCounter
@@ -86,13 +115,27 @@ main:
 !move:
     lda #0
     sta speedCounter
+    jsr moveHead
+    jsr moveTail
 
+!waitNextFrame:
+    lda frameCounter
+    cmp prevFrameCounter
+    bne !waitNextFrameEnd+
+    jmp !waitNextFrame-
+!waitNextFrameEnd:
+
+    jmp !gameLoop-
+
+// ========================================
+
+moveHead:
     lda curPosX
-    sta lastPosX
+    sta prevHeadPosX
     lda curPosY
-    sta lastPosY
+    sta prevHeadPosY
 
-    lda direction
+    lda headDir
     cmp #dirRight
     beq !moveRight+
     cmp #dirDown
@@ -128,13 +171,13 @@ main:
     lda curPosY
     pha
 
-    lda lastPosX
+    lda prevHeadPosX
     sta curPosX
-    lda lastPosY
+    lda prevHeadPosY
     sta curPosY
 
-    lda prevDirection
-    cmp direction
+    lda prevHeadDir
+    cmp headDir
     beq !keepDir+
     cmp #dirRight
     beq !fromRight+
@@ -146,7 +189,7 @@ main:
     beq !fromUp+
 
 !keepDir:
-    lda direction
+    lda headDir
     cmp #dirRight
     beq !rightLeft+
     cmp #dirDown
@@ -165,28 +208,28 @@ main:
     jmp !drawPrev+
 
 !fromRight:
-    lda direction
+    lda headDir
     cmp #dirDown
     beq !fromRightToDown+
     cmp #dirUp
     beq !fromRightToUp+
 
 !fromDown:
-    lda direction
+    lda headDir
     cmp #dirLeft
     beq !fromDownToLeft+
     cmp #dirRight
     beq !fromDownToRight+
 
 !fromLeft:
-    lda direction
+    lda headDir
     cmp #dirDown
     beq !fromLeftToDown+
     cmp #dirUp
     beq !fromLeftToUp+
 
 !fromUp:
-    lda direction
+    lda headDir
     cmp #dirLeft
     beq !fromUpToLeft+
     cmp #dirRight
@@ -232,17 +275,18 @@ main:
     pla
     sta curPosX
 
-    lda direction
-    sta prevDirection
+    lda headDir
+    sta prevHeadDir
 
-!waitNextFrame:
-    lda frameCounter
-    cmp prevFrameCounter
-    bne !waitNextFrameEnd+
-    jmp !waitNextFrame-
-!waitNextFrameEnd:
+!return:
+    rts
 
-    jmp !gameLoop-
+// ========================================
+
+moveTail:
+
+!return:
+    rts
 
 // ========================================
 

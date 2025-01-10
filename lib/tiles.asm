@@ -20,7 +20,7 @@ importTiles:
 
     ldx #0
 !loopTiles:
-    cpx #10
+    cpx #14
     beq !return+
 
     ldy #0
@@ -143,6 +143,46 @@ tilesStart:
 .byte %10011100
 .byte %11110100
 .byte %01110100
+.byte %00111100
+
+// $EA tailRight
+.byte %00000000
+.byte %00000000
+.byte %11110000
+.byte %11110101
+.byte %10010101
+.byte %11110000
+.byte %00000000
+.byte %00000000
+
+// $EB tailDown
+.byte %00111100
+.byte %00101100
+.byte %00101100
+.byte %00111100
+.byte %00000000
+.byte %00011000
+.byte %00000000
+.byte %00011000
+
+// $EC tailLeft
+.byte %00000000
+.byte %00000000
+.byte %00001111
+.byte %10101001
+.byte %10101111
+.byte %00001111
+.byte %00000000
+.byte %00000000
+
+// $ED tailUp
+.byte %00011000
+.byte %00000000
+.byte %00011000
+.byte %00000000
+.byte %00111100
+.byte %00110100
+.byte %00110100
 .byte %00111100
 
 // ========================================
