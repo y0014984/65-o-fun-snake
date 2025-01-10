@@ -54,4 +54,9 @@
 .const tileRightDown        = $E8
 .const tileDownLeft         = $E9
 
+.const tileTailRight        = $EA
+.const tileTailDown         = $EB
+.const tileTailLeft         = $EC
+.const tileTailUp           = $ED
+
 // ========================================
