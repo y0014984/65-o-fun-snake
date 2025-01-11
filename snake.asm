@@ -4,6 +4,42 @@
 
 // ========================================
 
+/*
+    The snake starts with a body of 6 elements.
+    The first element is the head and the last
+    element is the tail.
+    The snake moves with a specific speed in 
+    it's current direction. The player can 
+    change the direction with the arrow keys.
+    If the snake collides with itself or the 
+    outer borders the game is over. 
+    If the snake collides with (eats) the 
+    randomly spawning items (mice, apples) 
+    then the snake will grow in length each 
+    time by 1 element.
+    The spawning items will despawn after a 
+    certain amount of time. The will spawn 
+    the next one. For each consumed item the 
+    player will earn 1 point.
+    In a highscore list the best results are
+    stored. The highscore list can be accessed
+    by pressing the F1 key. (Space to continue)
+    The player can leave the game by pressing
+    the Escape key.
+
+    TODOS:
+    - forbid moving in opposite direction
+    - Start screen
+    - High score & screen
+    - Sound
+    - alternating body parts
+
+    Play Area = 38 x 26 = 988 fields
+    Initial Length = 6
+    Grow per Point = 4
+    (988 - 6) / 4 = 245 (Max Points) 
+*/
+
 #import "labels.asm"
 #import "constants.asm"
 #import "macros.asm"

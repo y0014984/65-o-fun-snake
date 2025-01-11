@@ -18,12 +18,16 @@
 .const charAtSign           = $40
 
 // Codepage 437 box drawings
-.const boxDrawingsLightVertical     = $B3
-.const boxDrawingsLightDownAndLeft  = $BF
-.const boxDrawingsLightUpAndRight   = $C0
-.const boxDrawingsLightHorizontal   = $C4
-.const boxDrawingsLightUpAndLeft    = $D9
-.const boxDrawingsLightDownAndRight = $DA
+.const boxDrawingsLightVertical             = $B3
+.const boxDrawingsLightVerticalAndLeft      = $B4
+.const boxDrawingsLightDownAndLeft          = $BF
+.const boxDrawingsLightUpAndRight           = $C0
+.const boxDrawingsLightUpAndHorizontal      = $C1
+.const boxDrawingsLightDownAndHorizontal    = $C2
+.const boxDrawingsLightVerticalAndRight     = $C3
+.const boxDrawingsLightHorizontal           = $C4
+.const boxDrawingsLightUpAndLeft            = $D9
+.const boxDrawingsLightDownAndRight         = $DA
 
 // ========================================
 
@@ -58,5 +62,7 @@
 .const tileTailDown         = $EB
 .const tileTailLeft         = $EC
 .const tileTailUp           = $ED
+
+.const tileMouse            = $EE
 
 // ========================================

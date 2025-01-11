@@ -20,14 +20,20 @@
 .label curPosX              = $0340
 .label curPosY              = $0341
 
+.label num8Digits           = $D705
+
 // ========================================
 
 // BIOS routines (need update after BIOS change)
 
 .label getCharFromBuf       = $D65B
-.label fillScreen           = $DD65
-.label calcCurPos           = $DB66
-.label printChar            = $DB95
+.label print8               = $D6BF
+
+.label getCharOnCurPos      = $DCF9
+.label fillScreen           = $DD8A
+.label calcCurPos           = $DB8B
+.label printChar            = $DBBA
+.label printString          = $DBC4
 
 // ========================================
 
@@ -46,5 +52,9 @@
 // Registers
 
 .label frameCounter         = $0220
+
+.label minRandom            = $0221
+.label maxRandom            = $0222
+.label randomValue          = $0223
 
 // ========================================

@@ -4,6 +4,11 @@
 
 // ========================================
 
+#import "labels.asm"
+#import "constants.asm"
+
+// ========================================
+
 .macro addByteToWord(byte, wordAddress) {
     lda wordAddress
     clc
@@ -21,6 +26,23 @@
     sta wordAddress
     lda #>label
     sta wordAddress+1
+}
+
+// ========================================
+
+.macro saveCurPosToStack() {
+    lda curPosX
+    pha
+    lda curPosY
+    pha
+}
+
+// ========================================
+.macro loadCurPosFromStack() {
+    pla 
+    sta curPosY
+    pla
+    sta curPosX
 }
 
 // ========================================

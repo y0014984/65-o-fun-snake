@@ -20,7 +20,7 @@ importTiles:
 
     ldx #0
 !loopTiles:
-    cpx #14
+    cpx #15
     beq !return+
 
     ldy #0
@@ -184,5 +184,15 @@ tilesStart:
 .byte %00110100
 .byte %00110100
 .byte %00111100
+
+// $EE mouse
+.byte %00000000
+.byte %10000000
+.byte %01000100
+.byte %01011100
+.byte %00111110
+.byte %00010100
+.byte %00000000
+.byte %00000000
 
 // ========================================
