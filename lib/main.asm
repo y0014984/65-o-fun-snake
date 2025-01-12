@@ -159,9 +159,14 @@ main:
     lda #TRUE
     sta dirSetInFrame
 
+!checks:
 !skipKeyscan:
 !skipDirChange:
-!checks:
+!clearKeyscanBuffer:
+    jsr getCharFromBuf
+    cmp #$00
+    bne !clearKeyscanBuffer-
+
 !checkSpawn:
     lda spawnCounter+1
     cmp spawn+1

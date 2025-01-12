@@ -32,7 +32,6 @@
     - High score screen
     - Sound
     - alternating body parts
-    - keyscan buffer hold a lot of keypresses
 
     Play Area = 38 x 26 = 988 fields
     Initial Length = 6
