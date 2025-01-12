@@ -122,7 +122,12 @@ main:
     beq !left+
     cmp #ctrlArrowUp
     beq !up+
+    cmp #ctrlEscape
+    beq !quitGame+
     jmp !checks+
+
+!quitGame:
+    rts
 
 !right:
     lda headDir
@@ -222,6 +227,8 @@ gameOver:
     jsr printString
 !waitForKeypress:
     jsr getCharFromBuf
+    cmp #ctrlEscape
+    beq !return+
     cmp #charSpace
     bne !waitForKeypress-
 !return:

@@ -16,11 +16,9 @@
     If the snake collides with (eats) the 
     randomly spawning items (mice, apples) 
     then the snake will grow in length each 
-    time by 1 element.
-    The spawning items will despawn after a 
-    certain amount of time. The will spawn 
-    the next one. For each consumed item the 
-    player will earn 1 point.
+    time by 4 elements.
+    For each consumed item the player will 
+    earn 1 point.
     In a highscore list the best results are
     stored. The highscore list can be accessed
     by pressing the F1 key. (Space to continue)
@@ -28,11 +26,13 @@
     the Escape key.
 
     TODOS:
-    - Bug: keyscan buffer hold a lot of keypresses
+    - add snake to computer fs (add 'load' command)
     - Start screen
-    - High score & screen
+    - High score
+    - High score screen
     - Sound
     - alternating body parts
+    - keyscan buffer hold a lot of keypresses
 
     Play Area = 38 x 26 = 988 fields
     Initial Length = 6

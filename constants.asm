@@ -33,6 +33,7 @@
 // ========================================
 
 // ASCII control characters
+.const ctrlEscape           = $1B
 .const ctrlArrowLeft        = $11           // reassignment of device control 1
 .const ctrlArrowRight       = $12           // reassignment of device control 2
 .const ctrlArrowUp          = $13           // reassignment of device control 3
