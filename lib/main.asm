@@ -118,21 +118,34 @@ main:
     jmp !checks+
 
 !right:
+    lda headDir
+    cmp #dirLeft
+    beq !skipDirChange+
     lda #dirRight
     jmp !setHeadDir+
 !down:
+    lda headDir
+    cmp #dirUp
+    beq !skipDirChange+
     lda #dirDown
     jmp !setHeadDir+
 !left:
+    lda headDir
+    cmp #dirRight
+    beq !skipDirChange+
     lda #dirLeft
     jmp !setHeadDir+
 !up:
+    lda headDir
+    cmp #dirDown
+    beq !skipDirChange+
     lda #dirUp
     jmp !setHeadDir+
 
 !setHeadDir:
     sta headDir
 
+!skipDirChange:
 !checks:
 !checkSpawn:
     lda spawnCounter+1

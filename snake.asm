@@ -28,7 +28,7 @@
     the Escape key.
 
     TODOS:
-    - forbid moving in opposite direction
+    - Bug: seems to recognize two keypresses in a row
     - Start screen
     - High score & screen
     - Sound
