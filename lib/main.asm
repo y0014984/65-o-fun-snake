@@ -195,8 +195,10 @@ gameOver:
     ldx #<strGameOver
     ldy #>strGameOver
     jsr printString
-!loop:
-    jmp !loop-
+!waitForKeypress:
+    jsr getCharFromBuf
+    cmp #charSpace
+    bne !waitForKeypress-
 !return:
     rts
 

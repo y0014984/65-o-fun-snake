@@ -16,6 +16,7 @@
 
 // Codepage 437 printable characters
 .const charAtSign           = $40
+.const charSpace            = $20
 
 // Codepage 437 box drawings
 .const boxDrawingsLightVertical             = $B3
