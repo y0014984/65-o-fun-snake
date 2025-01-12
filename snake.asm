@@ -26,11 +26,10 @@
     the Escape key.
 
     TODOS:
+    - Sound
     - add snake to computer fs (add 'load' command)
     - Start screen
-    - High score
-    - High score screen
-    - Sound
+    - High score screen (Enter Name (3 Digits) on Start/Restart)
     - alternating body parts
 
     Play Area = 38 x 26 = 988 fields

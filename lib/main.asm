@@ -37,9 +37,9 @@
 
 .const initSnakeLength  = 6                 // min 4; even numbers only
 
-.const offsetPoints     = 1                 // 3 digits; offset measured from start Info Area
-.const offsetStrPoints  = 5                 // offset measured from start Info Area
-.const offsetMessage    = 14                // offset measured from start Info Area
+.const offsetScore      = 1                 // 3 digits; offset measured from start Info Area
+.const offsetStrScore   = 5                 // offset measured from start Info Area
+.const offsetMessage    = 13                // offset measured from start Info Area
 
 .const speedBoost0      = 60
 .const speedBoost1      = 35                // -25
@@ -79,7 +79,8 @@ growCounter:        .byte 0
 
 collisionDetected:  .byte FALSE
 
-points:             .byte 0
+score:              .byte 0
+highScore:          .byte 0                 // won't be resetted upon restart
 
 dirSetInFrame:      .byte FALSE
 
@@ -87,12 +88,14 @@ dirSetInFrame:      .byte FALSE
 
 // Strings
 
-strPoints: .text @"Points\$00"
+strScore: .text @"Score\$00"
+strHighScore: .text @"New High Score\$00"
 strGameOver: .text @"Game Over - Press Space\$00"
 
 // ========================================
 
 main:
+    jsr importTiles
     jsr initGame
     jmp !gameLoop+
 
@@ -244,20 +247,20 @@ gameOver:
 drawTexts:
     lda #startInfoAreaX
     clc
-    adc #offsetStrPoints
+    adc #offsetStrScore
     sta curPosX
     lda #startInfoAreaY
     sta curPosY
 !print:
-    ldx #<strPoints
-    ldy #>strPoints
+    ldx #<strScore
+    ldy #>strScore
     jsr printString
 !return:
     rts
 
 // ========================================
 
-drawPoints:
+drawScore:
     saveCurPosToStack()
 
     lda #startInfoAreaX
@@ -267,17 +270,17 @@ drawPoints:
 
     jsr calcCurPos
 
-    lda points
+    lda score
     jsr print8
 
 !copy:
-    ldy #offsetPoints+0
+    ldy #offsetScore+0
     lda num8Digits+0
     sta (cursor),y
-    ldy #offsetPoints+1
+    ldy #offsetScore+1
     lda num8Digits+1
     sta (cursor),y
-    ldy #offsetPoints+2
+    ldy #offsetScore+2
     lda num8Digits+2
     sta (cursor),y
 
@@ -295,10 +298,6 @@ initGame:
 
     jsr drawTexts
 
-    jsr drawPoints
-
-    jsr importTiles
-
     lda #FALSE
     sta collisionDetected
     sta dirSetInFrame
@@ -309,11 +308,13 @@ initGame:
     // reset various variables
     lda #0
     sta prevFrameCounter
-    sta points
+    sta score
     sta speedCounter
     sta spawnCounter
     sta spawnCounter+1
     sta growCounter
+
+    jsr drawScore
 
     lda #round(screenWidth/2)-round(initSnakeLength/2)
     sta curPosX
@@ -403,8 +404,24 @@ checkCollision:
     jmp !return+
 
 !collectable:
-    inc points
-    lda points
+    inc score
+    lda score
+    cmp highScore
+    bcc !noHighScore+
+    sta highScore
+    saveCurPosToStack()
+    lda #startInfoAreaX
+    clc
+    adc #offsetMessage
+    sta curPosX
+    lda #startInfoAreaY
+    sta curPosY
+    ldx #<strHighScore
+    ldy #>strHighScore
+    jsr printString
+    loadCurPosFromStack()
+    lda score
+!noHighScore:
     cmp #25
     beq !speedBoost1+
     cmp #50
@@ -426,7 +443,7 @@ checkCollision:
     sta speed
 
 !draw:
-    jsr drawPoints
+    jsr drawScore
     lda growCounter
     clc
     adc grow
