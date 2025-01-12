@@ -28,7 +28,7 @@
     the Escape key.
 
     TODOS:
-    - Bug: seems to recognize two keypresses in a row
+    - Bug: keyscan buffer hold a lot of keypresses
     - Start screen
     - High score & screen
     - Sound

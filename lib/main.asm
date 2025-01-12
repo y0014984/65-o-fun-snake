@@ -81,6 +81,8 @@ collisionDetected:  .byte FALSE
 
 points:             .byte 0
 
+dirSetInFrame:      .byte FALSE
+
 // ========================================
 
 // Strings
@@ -106,6 +108,11 @@ main:
     lda frameCounter
     sta prevFrameCounter
 
+    lda dirSetInFrame
+    cmp #TRUE
+    beq !skipKeyscan+
+
+!keyscan:
     jsr getCharFromBuf
     cmp #ctrlArrowRight
     beq !right+
@@ -144,7 +151,10 @@ main:
 
 !setHeadDir:
     sta headDir
+    lda #TRUE
+    sta dirSetInFrame
 
+!skipKeyscan:
 !skipDirChange:
 !checks:
 !checkSpawn:
@@ -174,6 +184,8 @@ main:
     jmp !waitNextFrame+
 
 !move:
+    lda #FALSE
+    sta dirSetInFrame
     lda #0
     sta speedCounter
     jsr moveHead
@@ -277,6 +289,7 @@ initGame:
 
     lda #FALSE
     sta collisionDetected
+    sta dirSetInFrame
 
     lda #speedBoost0
     sta speed
