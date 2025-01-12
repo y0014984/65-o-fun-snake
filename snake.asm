@@ -20,17 +20,11 @@
     For each consumed item the player will 
     earn 1 point.
     In a highscore list the best results are
-    stored. The highscore list can be accessed
-    by pressing the F1 key. (Space to continue)
+    stored. (Not Implemented Yet)
+    The highscore list can be accessed by 
+    pressing the F1 key. (Space to continue)
     The player can leave the game by pressing
     the Escape key.
-
-    TODOS:
-    - Sound
-    - add snake to computer fs (add 'load' command)
-    - Start screen
-    - High score screen (Enter Name (3 Digits) on Start/Restart)
-    - alternating body parts
 
     Play Area = 38 x 26 = 988 fields
     Initial Length = 6
