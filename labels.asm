@@ -57,4 +57,7 @@
 .label maxRandom            = $0222
 .label randomValue          = $0223
 
+.label waveformDuration     = $0224
+.label startStopFrequency   = $0225
+
 // ========================================

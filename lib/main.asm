@@ -197,6 +197,7 @@ main:
     jmp !waitNextFrame+
 
 !move:
+    jsr playBeep
     lda #FALSE
     sta dirSetInFrame
     lda #0
@@ -219,6 +220,19 @@ main:
 !waitNextFrameEnd:
 
     jmp !gameLoop-
+
+// ========================================
+
+playBeep:
+    lda #%00001010                          // sine + 100 ms
+    sta waveformDuration
+    lda #%10111000                          // frequency low byte
+    sta startStopFrequency
+    lda #%10000001                          // frequency high byte + start
+    sta startStopFrequency+1
+
+!return:
+    rts
 
 // ========================================
 
