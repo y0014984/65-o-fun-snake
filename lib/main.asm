@@ -95,7 +95,6 @@ strGameOver: .text @"Game Over - Press Space\$00"
 // ========================================
 
 main:
-    jsr importTiles
     jsr initGame
     jmp !gameLoop+
 
@@ -244,9 +243,11 @@ gameOver:
     lda #startInfoAreaY
     sta curPosY
 !print:
+    jsr resetTileSet
     ldx #<strGameOver
     ldy #>strGameOver
     jsr printString
+    jsr setTileSet
 !waitForKeypress:
     jsr getCharFromBuf
     cmp #ctrlEscape
@@ -266,15 +267,18 @@ drawTexts:
     lda #startInfoAreaY
     sta curPosY
 !print:
+    jsr resetTileSet
     ldx #<strScore
     ldy #>strScore
     jsr printString
+    jsr setTileSet
 !return:
     rts
 
 // ========================================
 
 drawScore:
+    jsr resetTileSet
     saveCurPosToStack()
 
     lda #startInfoAreaX
@@ -300,6 +304,7 @@ drawScore:
 
 !return:
     loadCurPosFromStack()
+    jsr setTileSet
     rts
 
 // ========================================
@@ -329,6 +334,8 @@ initGame:
     sta growCounter
 
     jsr drawScore
+
+    jsr setTileSet
 
     lda #round(screenWidth/2)-round(initSnakeLength/2)
     sta curPosX
@@ -430,9 +437,11 @@ checkCollision:
     sta curPosX
     lda #startInfoAreaY
     sta curPosY
+    jsr resetTileSet
     ldx #<strHighScore
     ldy #>strHighScore
     jsr printString
+    jsr setTileSet
     loadCurPosFromStack()
     lda score
 !noHighScore:

@@ -29,11 +29,11 @@
 .label getCharFromBuf       = $D65B
 .label print8               = $D6BF
 
-.label getCharOnCurPos      = $DCF9
-.label fillScreen           = $DD8A
-.label calcCurPos           = $DB8B
-.label printChar            = $DBBA
-.label printString          = $DBC4
+.label getCharOnCurPos      = $DD44
+.label fillScreen           = $DDD5
+.label calcCurPos           = $DBD6
+.label printChar            = $DC05
+.label printString          = $DC0F
 
 // ========================================
 
@@ -59,5 +59,7 @@
 
 .label waveformDuration     = $0224
 .label startStopFrequency   = $0225
+
+.label tileSetAddr          = $022F         // WORD $022F + §0230
 
 // ========================================

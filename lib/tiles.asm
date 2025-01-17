@@ -10,42 +10,41 @@
 
 // ========================================
 
-importTiles:
-    copyLabelToWord(tilesStart, sourceAddr);
-    
-    lda #<fontStart+($E0*8)
-    sta destinationAddr
-    lda #>fontStart+($E0*8)
-    sta destinationAddr+1
-
-    ldx #0
-!loopTiles:
-    cpx #15
-    beq !return+
-
-    ldy #0
-!loopRows:
-    cpy #8
-    beq !loopRowsEnd+
-    lda (sourceAddr),y
-    sta (destinationAddr),y
-    iny
-    jmp !loopRows-
-!loopRowsEnd:
-
-    addByteToWord(8, sourceAddr);
-    addByteToWord(8, destinationAddr);
-    inx
-    jmp !loopTiles-
+setTileSet:
+    lda #<tileSet
+    sta tileSetAddr
+    lda #>tileSet
+    sta tileSetAddr+1
 
 !return:
     rts
 
 // ========================================
 
-tilesStart:
+resetTileSet:
+    lda #<fontStart
+    sta tileSetAddr
+    lda #>fontStart
+    sta tileSetAddr+1
 
-// $E0 headRight
+!return:
+    rts
+
+// ========================================
+
+tileSet:
+
+// $00 empty
+.byte %00000000
+.byte %00000000
+.byte %00000000
+.byte %00000000
+.byte %00000000
+.byte %00000000
+.byte %00000000
+.byte %00000000
+
+// $01 headRight
 .byte %01110000
 .byte %11111100
 .byte %11101110
@@ -55,7 +54,7 @@ tilesStart:
 .byte %11111100
 .byte %01110000
 
-// $E1 headDown
+// $02 headDown
 .byte %01111110
 .byte %11111111
 .byte %11111111
@@ -65,7 +64,7 @@ tilesStart:
 .byte %00100100
 .byte %00000000
 
-// $E2 headLeft
+// $03 headLeft
 .byte %00001110
 .byte %00111111
 .byte %01110111
@@ -75,7 +74,7 @@ tilesStart:
 .byte %00111111
 .byte %00001110
 
-// $E3 headUp
+// $03 headUp
 .byte %00000000
 .byte %00100100
 .byte %01111110
@@ -85,7 +84,7 @@ tilesStart:
 .byte %11111111
 .byte %01111110
 
-// $E4 rightLeft
+// $05 rightLeft
 .byte %00000000
 .byte %00000000
 .byte %11111111
@@ -95,7 +94,7 @@ tilesStart:
 .byte %00000000
 .byte %00000000
 
-// $E5 downUp
+// $06 downUp
 .byte %00111100
 .byte %00101100
 .byte %00101100
@@ -105,7 +104,7 @@ tilesStart:
 .byte %00110100
 .byte %00111100
 
-// $E6 leftUp
+// $07 leftUp
 .byte %00111100
 .byte %01101100
 .byte %11101100
@@ -115,7 +114,7 @@ tilesStart:
 .byte %00000000
 .byte %00000000
 
-// $E7 upRight
+// $08 upRight
 .byte %00111100
 .byte %00101110
 .byte %00101111
@@ -125,7 +124,7 @@ tilesStart:
 .byte %00000000
 .byte %00000000
 
-// $E8 rightDown
+// $09 rightDown
 .byte %00000000
 .byte %00000000
 .byte %00011111
@@ -135,7 +134,7 @@ tilesStart:
 .byte %00110110
 .byte %00111100
 
-// $E9 downLeft
+// $0A downLeft
 .byte %00000000
 .byte %00000000
 .byte %11111000
@@ -145,7 +144,7 @@ tilesStart:
 .byte %01110100
 .byte %00111100
 
-// $EA tailRight
+// $0B tailRight
 .byte %00000000
 .byte %00000000
 .byte %11110000
@@ -155,7 +154,7 @@ tilesStart:
 .byte %00000000
 .byte %00000000
 
-// $EB tailDown
+// $0C tailDown
 .byte %00111100
 .byte %00101100
 .byte %00101100
@@ -165,7 +164,7 @@ tilesStart:
 .byte %00000000
 .byte %00011000
 
-// $EC tailLeft
+// $0D tailLeft
 .byte %00000000
 .byte %00000000
 .byte %00001111
@@ -175,7 +174,7 @@ tilesStart:
 .byte %00000000
 .byte %00000000
 
-// $ED tailUp
+// $0E tailUp
 .byte %00011000
 .byte %00000000
 .byte %00011000
@@ -185,7 +184,7 @@ tilesStart:
 .byte %00110100
 .byte %00111100
 
-// $EE mouse
+// $0F mouse
 .byte %00000000
 .byte %10000000
 .byte %01000100

@@ -47,24 +47,26 @@
 .const dirLeft              = $80
 .const dirUp                = $C0
 
-.const tileHeadRight        = $E0
-.const tileHeadDown         = $E1
-.const tileHeadLeft         = $E2
-.const tileHeadUp           = $E3
+.const tileEmpty            = $00
 
-.const tileRightLeft        = $E4
-.const tileDownUp           = $E5
+.const tileHeadRight        = $01
+.const tileHeadDown         = $02
+.const tileHeadLeft         = $03
+.const tileHeadUp           = $04
 
-.const tileLeftUp           = $E6
-.const tileUpRight          = $E7
-.const tileRightDown        = $E8
-.const tileDownLeft         = $E9
+.const tileRightLeft        = $05
+.const tileDownUp           = $06
 
-.const tileTailRight        = $EA
-.const tileTailDown         = $EB
-.const tileTailLeft         = $EC
-.const tileTailUp           = $ED
+.const tileLeftUp           = $07
+.const tileUpRight          = $08
+.const tileRightDown        = $09
+.const tileDownLeft         = $0A
 
-.const tileMouse            = $EE
+.const tileTailRight        = $0B
+.const tileTailDown         = $0C
+.const tileTailLeft         = $0D
+.const tileTailUp           = $0E
+
+.const tileMouse            = $0F
 
 // ========================================
