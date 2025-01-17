@@ -239,14 +239,14 @@ gameOver:
     lda #startInfoAreaX
     clc
     adc #offsetMessage
-    sta curPosX
+    sta terminal.curPosX
     lda #startInfoAreaY
-    sta curPosY
+    sta terminal.curPosY
 !print:
     jsr resetTileSet
     ldx #<strGameOver
     ldy #>strGameOver
-    jsr printString
+    jsr terminal.printString
     jsr setTileSet
 !waitForKeypress:
     jsr getCharFromBuf
@@ -263,14 +263,14 @@ drawTexts:
     lda #startInfoAreaX
     clc
     adc #offsetStrScore
-    sta curPosX
+    sta terminal.curPosX
     lda #startInfoAreaY
-    sta curPosY
+    sta terminal.curPosY
 !print:
     jsr resetTileSet
     ldx #<strScore
     ldy #>strScore
-    jsr printString
+    jsr terminal.printString
     jsr setTileSet
 !return:
     rts
@@ -282,11 +282,11 @@ drawScore:
     saveCurPosToStack()
 
     lda #startInfoAreaX
-    sta curPosX
+    sta terminal.curPosX
     lda #startInfoAreaY
-    sta curPosY
+    sta terminal.curPosY
 
-    jsr calcCurPos
+    jsr terminal.calcCurPos
 
     lda score
     jsr print8
@@ -294,13 +294,13 @@ drawScore:
 !copy:
     ldy #offsetScore+0
     lda num8Digits+0
-    sta (cursor),y
+    sta (terminal.cursor),y
     ldy #offsetScore+1
     lda num8Digits+1
-    sta (cursor),y
+    sta (terminal.cursor),y
     ldy #offsetScore+2
     lda num8Digits+2
-    sta (cursor),y
+    sta (terminal.cursor),y
 
 !return:
     loadCurPosFromStack()
@@ -310,9 +310,12 @@ drawScore:
 // ========================================
 
 initGame:
-    lda #$00
-    jsr fillScreen
+    jsr setTileSet
     
+    lda #$00
+
+    jsr terminal.fillScreen
+
     jsr drawGameBorder
 
     jsr drawTexts
@@ -335,12 +338,10 @@ initGame:
 
     jsr drawScore
 
-    jsr setTileSet
-
     lda #round(screenWidth/2)-round(initSnakeLength/2)
-    sta curPosX
+    sta terminal.curPosX
     lda #round(screenHeight/2)
-    sta curPosY
+    sta terminal.curPosY
     sta prevHeadPosY
     sta headPosY
     sta tailPosY
@@ -354,28 +355,28 @@ initGame:
 
     // tail
     lda #tileTailLeft
-    jsr printChar
-    lda curPosX
+    jsr terminal.printChar
+    lda terminal.curPosX
     sta tailPosX
 
     // next tail
-    inc curPosX
+    inc terminal.curPosX
     lda #tileRightLeft
-    jsr printChar
-    lda curPosX
+    jsr terminal.printChar
+    lda terminal.curPosX
     sta nextTailPosX
 
     .for (var i=0; i<initSnakeLength-3; i++) { 
         // body part
-        inc curPosX
+        inc terminal.curPosX
         lda #tileRightLeft
-        jsr printChar
+        jsr terminal.printChar
     }
 
     // head
-    inc curPosX
+    inc terminal.curPosX
     lda #tileHeadRight
-    jsr printChar
+    jsr terminal.printChar
     
     jsr spawnCollectable
     
@@ -393,22 +394,22 @@ spawnCollectable:
     lda #startPlayAreaX+playAreaWidth
     sta maxRandom
     lda randomValue
-    sta curPosX
+    sta terminal.curPosX
 
     lda #startPlayAreaY
     sta minRandom
     lda #startPlayAreaY+playAreaHeight
     sta maxRandom
     lda randomValue
-    sta curPosY
+    sta terminal.curPosY
 
-    jsr getCharOnCurPos
+    jsr terminal.getCharOnCurPos
     cmp #$00                                // tile is already occupied; randomize again
     bne !randomize-
 
 !drawCollectable:
     lda #tileMouse
-    jsr printChar
+    jsr terminal.printChar
 
 !return:
     loadCurPosFromStack()
@@ -417,7 +418,7 @@ spawnCollectable:
 // ========================================
 
 checkCollision:
-    jsr getCharOnCurPos
+    jsr terminal.getCharOnCurPos
     cmp #tileMouse
     beq !collectable+
     cmp #$00
@@ -434,13 +435,13 @@ checkCollision:
     lda #startInfoAreaX
     clc
     adc #offsetMessage
-    sta curPosX
+    sta terminal.curPosX
     lda #startInfoAreaY
-    sta curPosY
+    sta terminal.curPosY
     jsr resetTileSet
     ldx #<strHighScore
     ldy #>strHighScore
-    jsr printString
+    jsr terminal.printString
     jsr setTileSet
     loadCurPosFromStack()
     lda score
@@ -483,9 +484,9 @@ checkCollision:
 // ========================================
 
 moveHead:
-    lda curPosX
+    lda terminal.curPosX
     sta prevHeadPosX
-    lda curPosY
+    lda terminal.curPosY
     sta prevHeadPosY
 
     lda headDir
@@ -499,19 +500,19 @@ moveHead:
     beq !moveUp+
 
 !moveRight:
-    inc curPosX
+    inc terminal.curPosX
     lda #tileHeadRight
     jmp !checkCollision+
 !moveDown:
-    inc curPosY
+    inc terminal.curPosY
     lda #tileHeadDown
     jmp !checkCollision+
 !moveLeft:
-    dec curPosX
+    dec terminal.curPosX
     lda #tileHeadLeft
     jmp !checkCollision+
 !moveUp:
-    dec curPosY
+    dec terminal.curPosY
     lda #tileHeadUp
     jmp !checkCollision+
 
@@ -520,15 +521,15 @@ moveHead:
     jsr checkCollision
     pla
 !drawHead:
-    jsr printChar
+    jsr terminal.printChar
 
 !drawPrevTile:
     saveCurPosToStack()
 
     lda prevHeadPosX
-    sta curPosX
+    sta terminal.curPosX
     lda prevHeadPosY
-    sta curPosY
+    sta terminal.curPosY
 
     lda prevHeadDir
     cmp headDir
@@ -622,7 +623,7 @@ moveHead:
     jmp !drawPrev+
 
 !drawPrev:
-    jsr printChar
+    jsr terminal.printChar
 
     loadCurPosFromStack()
 
@@ -639,18 +640,18 @@ moveTail:
 
     // clear last tail position
     lda tailPosX
-    sta curPosX
+    sta terminal.curPosX
     lda tailPosY
-    sta curPosY
+    sta terminal.curPosY
     lda #$00
-    jsr printChar
+    jsr terminal.printChar
     
     // draw new tail on next pos
     lda nextTailPosX
     sta tailPosX
-    sta curPosX
+    sta terminal.curPosX
     lda nextTailPosY
-    sta curPosY
+    sta terminal.curPosY
     sta tailPosY
     lda nextTailDir
     sta tailDir
@@ -683,15 +684,15 @@ moveTail:
     jmp !drawTail+
 
 !drawTail:
-    jsr printChar
+    jsr terminal.printChar
 
 !getNewNextTailDir:
     lda nextTailPosX
-    sta curPosX
+    sta terminal.curPosX
     lda nextTailPosY
-    sta curPosY
+    sta terminal.curPosY
 
-    jsr getCharOnCurPos
+    jsr terminal.getCharOnCurPos
     cmp #tileRightLeft
     beq !rightLeft+
     cmp #tileDownUp
@@ -765,6 +766,8 @@ moveTail:
 // ========================================
 
 drawGameBorder:
+    jsr resetTileSet
+
     // top, bottom and delimiter border
     lda #boxDrawingsLightHorizontal
     ldx #1
@@ -822,6 +825,7 @@ drawGameBorder:
     sta screenMemStart+(screenWidth*(screenHeight-borderHeight-infoAreaHeight))+offsetMessage-1+screenWidth
     
 !return:
+    jsr setTileSet
     rts
 
 // ========================================

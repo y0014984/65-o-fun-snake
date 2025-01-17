@@ -31,18 +31,18 @@
 // ========================================
 
 .macro saveCurPosToStack() {
-    lda curPosX
+    lda terminal.curPosX
     pha
-    lda curPosY
+    lda terminal.curPosY
     pha
 }
 
 // ========================================
 .macro loadCurPosFromStack() {
     pla 
-    sta curPosY
+    sta terminal.curPosY
     pla
-    sta curPosX
+    sta terminal.curPosX
 }
 
 // ========================================
