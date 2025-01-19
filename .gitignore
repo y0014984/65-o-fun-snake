@@ -3,7 +3,6 @@ debugcode.txt
 *.bin
 *.prg
 *.dbg
-*.sym
 *.vs
 .source.txt
 ByteDump.txt
